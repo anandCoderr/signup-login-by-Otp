@@ -23,6 +23,7 @@ const successHelper = (res, message, status, data = {}) => {
 
 const validatorHelper = async (body, validCheck) => {
   const v = new Validator(body, validCheck);
+
   return await v.check();
 };
 
@@ -56,4 +57,17 @@ const nodeMailerOtpHelper = async (to, sub, message) => {
   }
 };
 
-export { errorHelper, successHelper, validatorHelper, nodeMailerOtpHelper };
+
+const newValidatorHelper = async (body, validCheck) => {
+  const v = new Validator(body, validCheck);
+  const isValid = await v.check();
+
+  if (!isValid) {
+    return { success: false, errors: v.errors }; // Return error messages
+  }
+
+  return { success: true }; // Validation passed
+};
+
+
+export { errorHelper, successHelper, validatorHelper, nodeMailerOtpHelper,newValidatorHelper };
